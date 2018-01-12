@@ -7,6 +7,13 @@
   <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
   <script src="https://unpkg.com/axios/dist/axios.js"></script>
   <script src="index.js" defer></script>
+
+   <style type="text/css">
+    .strike {
+      text-decoration: line-through;
+    }
+  </style>
+
 </head>
 <body>
   <div id="vue-app">
@@ -21,7 +28,7 @@
   <div class="vue-component">
 
     <h1>{{ message }}</h1>
-    <p v-for="task in tasks" v-on:click="removeTask(task)" v-if="isPositive(task)">
+    <p v-bind:class="{strike: task.completed}" v-for="task in tasks" v-on:click="toggleCompleted(task)">
       {{ task.text }} ----
       {{ task.completed }}
     </p>

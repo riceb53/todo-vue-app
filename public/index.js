@@ -19,7 +19,7 @@ var HomePage = {
         {
           id: 3,
           text: "shave your beard",
-          completed: false
+          completed: true
         }
       ],
       text: "",
@@ -60,6 +60,9 @@ var HomePage = {
       } else {
         return true;
       }
+    },
+    toggleCompleted: function(inputTask) {
+      inputTask.completed = !inputTask.completed;
     }
   },
   computed: {}
