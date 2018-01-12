@@ -63,6 +63,31 @@ var HomePage = {
     },
     toggleCompleted: function(inputTask) {
       inputTask.completed = !inputTask.completed;
+    },
+    numberOfIncompleteTasks: function() {
+      // get the array of tasks
+      var count = 0;
+      // loop through
+      this.tasks.forEach(function(task) {
+        // find out if it's completed
+        if (task.completed === false) {
+          count++;
+        }
+        // if it is, then increment the counter
+      })
+      // count up all the incomplete tasks
+      return count;
+    },
+    removeCompletedTasks: function() {
+      // get all the tasks
+      // make a new array with all the ones I haven't completed
+      var incompleteTasks = [];
+      for (var i = 0; i < this.tasks.length; i++) {
+        if (!this.tasks[i].completed) {
+          incompleteTasks.push(this.tasks[i]);
+        }
+      }
+      this.tasks = incompleteTasks;
     }
   },
   computed: {}

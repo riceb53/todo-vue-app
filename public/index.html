@@ -27,6 +27,8 @@
 <template id="home-page">
   <div class="vue-component">
 
+    <p>This is how many tasks are yet to be completed {{ numberOfIncompleteTasks() }}</p>
+
     <h1>{{ message }}</h1>
     <p v-bind:class="{strike: task.completed}" v-for="task in tasks" v-on:click="toggleCompleted(task)">
       {{ task.text }} ----
@@ -36,5 +38,8 @@
     <p><input type="text" v-model="text"></p>
     <p><input type="text" v-model="completed"></p>
     <button v-on:click="addTask()">Add a new task</button>
+
+    <hr>
+    <button v-on:click="removeCompletedTasks()">Remove all completed tasks</button>
   </div>
 </template>
