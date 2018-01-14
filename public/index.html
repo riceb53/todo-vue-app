@@ -33,10 +33,11 @@
     <p v-bind:class="{strike: task.completed}" v-for="task in tasks" v-on:click="toggleCompleted(task)">
       {{ task.text }} ----
       {{ task.completed }}
+      <button v-on:click="removeTask(task)">Remove the task</button>
     </p>
 
-    <p><input type="text" v-model="text"></p>
-    <p><input type="text" v-model="completed"></p>
+    <p>Text<input type="text" v-model="text"></p>
+    <p>Completed<input type="text" v-model="completed"></p>
     <button v-on:click="addTask()">Add a new task</button>
 
     <hr>

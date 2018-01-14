@@ -5,53 +5,49 @@ var HomePage = {
   data: function() {
     return {
       message: "Welcome to Vue.js!",
-      tasks: [
-        {
-          id: 1,
-          text: "take out the garbage bad",
-          completed: false
-        },
-        {
-          id: 2,
-          text: "make the bed",
-          completed: false
-        },
-        {
-          id: 3,
-          text: "shave your beard",
-          completed: true
-        }
-      ],
+      tasks: [],
       text: "",
       completed: ""
     };
   },
-  created: function() {},
+  created: function() {
+    // get tasks from the db
+    axios.get('/v1/tasks').then(function(response) {
+      console.log(response.data);
+      this.tasks = response.data;
+    }.bind(this));
+    // show them to the user
+  },
   methods: {
     addTask: function() {
       console.log('adding the task...');
       // make an object the same structure as the elements in my current array
-      var newTask = {
-        id: 3,
+      var params = {
         text: this.text,
         completed: this.completed
       };
+      // make an http request to my create action
+      axios.post('/v1/tasks', params).then(function(response) {
+        console.log(response.data);
+        // add the data to my array
+        // if (this.text !== '' || this.completed !== '') {
+        this.tasks.push(response.data);
+        // }
+      }.bind(this));
 
-      if (this.text !== '' || this.completed !== '') {
-        this.tasks.push(newTask);
-      }
+
       // rest the stuff in the text input boxes
       this.text = "";
       this.completed = "";
     },
-    removeTask: function(inputTask) {
-      console.log('removing the task');
-      // find the index of that task
-      var index = this.tasks.indexOf(inputTask);
-      console.log(index);
-      // remove it from the array
-      this.tasks.splice(index, 1);
-    },
+    // removeTask: function(inputTask) {
+    //   console.log('removing the task');
+    //   // find the index of that task
+    //   var index = this.tasks.indexOf(inputTask);
+    //   console.log(index);
+    //   // remove it from the array
+    //   this.tasks.splice(index, 1);
+    // },
     isPositive: function(inputTask) {
       // if the text has the word 'bad' in it, don't show it
       var text = inputTask.text;
@@ -88,6 +84,17 @@ var HomePage = {
         }
       }
       this.tasks = incompleteTasks;
+    },
+    removeTask: function(inputTask) {
+      console.log(inputTask);
+      // make http request to the api to remove task from db
+      axios.delete('/v1/tasks/' + inputTask.id).then(function(response) {
+        console.log(response.data);
+        // remove task from variable 'tasks'
+        var index = this.tasks.indexOf(inputTask);
+        this.tasks.splice(index, 1);
+      }.bind(this))
+
     }
   },
   computed: {}
